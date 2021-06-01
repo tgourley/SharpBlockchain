@@ -2,17 +2,25 @@
 using System;
 using System.Collections.Generic;
 
+// Blockchain Explained Article - https://towardsdatascience.com/blockchain-explained-using-c-implementation-fb60f29b9f07
+
 namespace SharpBlockchain.CommandLine
 {
     public class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
+            int proofOfWorkDifficulty = 2;
+
+            if (args.Length == 1) 
+                if (!int.TryParse(args[0], out proofOfWorkDifficulty))
+                    proofOfWorkDifficulty = 2;
+
             const string minerAddress = "miner1";
             const string user1Address = "A";
             const string user2Address = "B";
             
-            BlockChain blockChain = new BlockChain(proofOfWorkDifficulty: 3, miningReward: 10);
+            BlockChain blockChain = new BlockChain(proofOfWorkDifficulty: proofOfWorkDifficulty, miningReward: 10);
             
             blockChain.CreateTransaction(new Transaction(user1Address, user2Address, 200));
             blockChain.CreateTransaction(new Transaction(user2Address, user1Address, 10));
